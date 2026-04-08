@@ -10,30 +10,6 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50" style={isTelegram ? { paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" } : {}}>
-      {/* Header — скрываем в Telegram, там есть нативный back */}
-      {!isTelegram && (
-        <header className="border-b border-gray-100 bg-white px-6 py-4 shadow-sm">
-          <div className="mx-auto flex max-w-6xl items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600">
-                <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="3" width="7" height="7" rx="1" />
-                  <rect x="3" y="14" width="7" height="7" rx="1" />
-                  <rect x="14" y="14" width="3" height="3" rx="0.5" />
-                  <rect x="18" y="14" width="3" height="3" rx="0.5" />
-                  <rect x="14" y="18" width="3" height="3" rx="0.5" />
-                  <rect x="18" y="18" width="3" height="3" rx="0.5" />
-                </svg>
-              </div>
-              <span className="text-lg font-semibold text-gray-900">QR Generator</span>
-            </div>
-            <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">
-              Production
-            </span>
-          </div>
-        </header>
-      )}
 
       {/* Main */}
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-4 sm:px-6 sm:py-6">
@@ -58,12 +34,6 @@ export default function App() {
         </div>
       </main>
 
-      {/* Footer — скрываем в Telegram */}
-      {!isTelegram && (
-        <footer className="border-t border-gray-100 bg-white px-6 py-3 text-center text-xs text-gray-400">
-          QR Generator — production-ready, SVG-first
-        </footer>
-      )}
     </div>
   );
 }
