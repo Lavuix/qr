@@ -8,18 +8,19 @@ interface DownloadButtonsProps {
   onDownloadSVG: () => void;
   onDownloadPNG: () => void;
   disabled: boolean;
+  isTelegram?: boolean;
 }
 
-export function DownloadButtons({ onDownloadSVG, onDownloadPNG, disabled }: DownloadButtonsProps) {
+export function DownloadButtons({ onDownloadSVG, onDownloadPNG, disabled, isTelegram }: DownloadButtonsProps) {
   return (
     <div className="flex gap-3 w-full">
       <button type="button" onClick={onDownloadSVG} disabled={disabled} className="btn-primary flex-1 justify-center">
         <DownloadIcon />
-        SVG
+        {isTelegram ? "SVG в чат" : "SVG"}
       </button>
       <button type="button" onClick={onDownloadPNG} disabled={disabled} className="btn-secondary flex-1 justify-center">
         <DownloadIcon />
-        PNG
+        {isTelegram ? "PNG в чат" : "PNG"}
       </button>
     </div>
   );

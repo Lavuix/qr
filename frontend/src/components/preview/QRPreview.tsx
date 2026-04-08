@@ -2,6 +2,7 @@ import { Component, type ReactNode } from "react";
 import type { QRConfig } from "../../types";
 import { useQRRenderer, PREVIEW_SIZE } from "../../hooks/useQRRenderer";
 import { useExport } from "../../hooks/useExport";
+import { useTelegramSend } from "../../hooks/useTelegramSend";
 import { isQRContentValid } from "../../utils/buildQRData";
 import { DownloadButtons } from "./DownloadButtons";
 
@@ -26,6 +27,7 @@ class QRErrorBoundary extends Component<{ children: ReactNode }, { hasError: boo
 function QRPreviewInner({ config, isValid }: { config: QRConfig; isValid: boolean }) {
   const { containerRef, getInstance, getExportOptions } = useQRRenderer(config, isValid);
   const { downloadSVG, downloadPNG } = useExport(getInstance, config, getExportOptions);
+  const { sendSVG, sendPNG, isTelegram } = useTelegramSend(config, getExportOptions);
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -43,7 +45,12 @@ function QRPreviewInner({ config, isValid }: { config: QRConfig; isValid: boolea
         />
       </div>
       <div className="flex flex-col items-center gap-1.5 w-full">
-        <DownloadButtons onDownloadSVG={downloadSVG} onDownloadPNG={downloadPNG} disabled={!isValid} />
+        <DownloadButtons
+          onDownloadSVG={isTelegram ? sendSVG : downloadSVG}
+          onDownloadPNG={isTelegram ? sendPNG : downloadPNG}
+          disabled={!isValid}
+          isTelegram={isTelegram}
+        />
         <p className="text-xs text-gray-400">Экспорт: {config.options.size} × {config.options.size} px</p>
       </div>
     </div>
