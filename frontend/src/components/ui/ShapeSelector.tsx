@@ -14,7 +14,7 @@ export function ShapeSelector<T extends string>({
   return (
     <div>
       <p className="label-base">{label}</p>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
         {options.map((opt) => (
           <button
             key={opt.value}
