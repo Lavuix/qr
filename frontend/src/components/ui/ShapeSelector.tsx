@@ -14,7 +14,7 @@ export function ShapeSelector<T extends string>({
   return (
     <div>
       <p className="label-base">{label}</p>
-      <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex flex-wrap gap-1.5">
         {options.map((opt) => (
           <button
             key={opt.value}
@@ -22,14 +22,14 @@ export function ShapeSelector<T extends string>({
             title={opt.label}
             onClick={() => onChange(opt.value)}
             className={[
-              "flex flex-col items-center gap-1 rounded-lg border p-2 transition-all flex-shrink-0 w-14",
+              "flex flex-col items-center gap-1 rounded-lg border p-2 transition-all",
               value === opt.value
                 ? "border-brand-500 bg-brand-50 text-brand-600"
                 : "border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50",
             ].join(" ")}
           >
             {opt.icon}
-            <span className="text-[9px] leading-tight text-center w-full truncate">{opt.label}</span>
+            <span className="text-[9px] leading-tight text-center">{opt.label}</span>
           </button>
         ))}
       </div>
