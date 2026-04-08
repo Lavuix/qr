@@ -8,6 +8,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Prevent iOS auto-zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
   body {
     @apply bg-gray-50 text-gray-900;
   }
