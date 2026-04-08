@@ -20,19 +20,19 @@ export function useExport(
     setTimeout(() => instance.update(getExportOptions(PREVIEW_SIZE)), 300);
   }, [getInstance, getExportOptions, exportSize]);
 
-  const downloadPNG = useCallback(async () => {
-    // Create a canvas-type instance for PNG — SVG→canvas conversion loses custom dot shapes
-    const options = { ...getExportOptions(exportSize), type: "canvas" as const };
-    const tempInstance = new QRCodeStyling(options);
-    const tempDiv = document.createElement("div");
-    tempDiv.style.position = "absolute";
-    tempDiv.style.left = "-9999px";
-    document.body.appendChild(tempDiv);
-    tempInstance.append(tempDiv);
+  const downloadPNG = useCallback(() => {
+    // Use a canvas-type instance so dots render natively (no SVG→canvas blurring)
+    const opts = { ...getExportOptions(exportSize), type: "canvas" as const };
+    const tempInstance = new QRCodeStyling(opts);
+    const div = document.createElement("div");
+    div.style.cssText = "position:fixed;left:-9999px;top:-9999px;visibility:hidden";
+    document.body.appendChild(div);
+    tempInstance.append(div);
+    // Give canvas time to render before downloading
     setTimeout(() => {
       tempInstance.download({ name: "qr-code", extension: "png" });
-      setTimeout(() => document.body.removeChild(tempDiv), 1000);
-    }, 200);
+      setTimeout(() => document.body.removeChild(div), 2000);
+    }, 300);
   }, [getExportOptions, exportSize]);
 
   return { downloadSVG, downloadPNG };
