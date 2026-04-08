@@ -21,14 +21,19 @@ export function useExport(
   }, [getInstance, getExportOptions, exportSize]);
 
   const downloadPNG = useCallback(async () => {
-    const instance = getInstance();
-    if (!instance) return;
-    instance.update(getExportOptions(exportSize));
+    // Create a canvas-type instance for PNG — SVG→canvas conversion loses custom dot shapes
+    const options = { ...getExportOptions(exportSize), type: "canvas" as const };
+    const tempInstance = new QRCodeStyling(options);
+    const tempDiv = document.createElement("div");
+    tempDiv.style.position = "absolute";
+    tempDiv.style.left = "-9999px";
+    document.body.appendChild(tempDiv);
+    tempInstance.append(tempDiv);
     setTimeout(() => {
-      instance.download({ name: "qr-code", extension: "png" });
-      setTimeout(() => instance.update(getExportOptions(PREVIEW_SIZE)), 100);
-    }, 150);
-  }, [getInstance, getExportOptions, exportSize]);
+      tempInstance.download({ name: "qr-code", extension: "png" });
+      setTimeout(() => document.body.removeChild(tempDiv), 1000);
+    }, 200);
+  }, [getExportOptions, exportSize]);
 
   return { downloadSVG, downloadPNG };
 }
